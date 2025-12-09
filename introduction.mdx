@@ -1,0 +1,118 @@
+---
+title: Welcome to Unitalk AI
+description: Unitalk AI is an AI and automation platform empowering solo entrepreneurs, teams, and organizations to access AI models, customize assistants, and automate tasks for enhanced efficiency.
+---
+
+## Overview
+
+Unitalk AI empowers you to harness artificial intelligence and automation without complexity. You access leading AI models through a unified platform and explore a marketplace of customizable AI assistants. Connect your preferred models, build automations, and scale efficiency for your business needs.
+
+Unitalk simplifies AI adoption by providing ready-to-use tools. You customize assistants for specific tasks like content generation, customer support, or data analysis. The platform handles integrations, so you focus on results.
+
+<Columns cols={3}>
+  <Card title="AI Model Access" icon="zap" href="/docs/models">
+    Connect to models like GPT-4, Claude, or Llama seamlessly.
+  </Card>
+  <Card title="Assistant Marketplace" icon="shopping-bag" href="/docs/marketplace">
+    Browse and deploy pre-built assistants instantly.
+  </Card>
+  <Card title="Task Automation" icon="settings" href="/docs/automation">
+    Automate workflows across apps and services.
+  </Card>
+</Columns>
+
+## Key Features and Benefits
+
+Unitalk delivers powerful capabilities that save you time and reduce costs.
+
+<Callout kind="success">
+  Start boosting productivity in minutes—no coding expertise required.
+</Callout>
+
+Discover core features through these steps:
+
+<Steps>
+  <Step title="Sign Up and Connect" icon="user-plus">
+    Create your account and link AI models via simple API keys.
+  </Step>
+  <Step title="Browse Marketplace" icon="search">
+    Select from hundreds of assistants tailored to your industry.
+  </Step>
+  <Step title="Customize and Deploy" icon="edit-3">
+    Tweak prompts and deploy to your tools or apps.
+  </Step>
+  <Step title="Monitor and Scale" icon="trending-up">
+    Track performance and automate scaling as needed.
+  </Step>
+</Steps>
+
+Integrate Unitalk into your apps with this example:
+
+<CodeGroup tabs="JavaScript,Python">
+  ```javascript
+  const unitalk = require('unitalk-sdk');
+
+  const client = new unitalk.Client({ apiKey: 'your-api-key' });
+  const assistant = await client.assistants.create({
+    name: 'Customer Support Bot',
+    model: 'gpt-4o',
+    instructions: 'Help users with billing inquiries.'
+  });
+  console.log(assistant.id);
+  ```
+  ```python
+  from unitalk import Client
+
+  client = Client(api_key="your-api-key")
+  assistant = client.assistants.create(
+      name="Customer Support Bot",
+      model="gpt-4o",
+      instructions="Help users with billing inquiries."
+  )
+  print(assistant.id)
+  ```
+</CodeGroup>
+
+## Target Users and Use Cases
+
+Unitalk serves diverse users with tailored applications.
+
+<Tabs>
+  <Tab title="Solo Entrepreneurs" icon="user">
+    Generate marketing content, manage leads, and automate social media.
+
+    You draft emails 10x faster or analyze customer feedback automatically.
+
+    <Expandable title="Example Use Case">
+      Build a lead qualifier that scores prospects and schedules calls.
+    </Expandable>
+  </Tab>
+  <Tab title="Teams" icon="users">
+    Centralize AI tools for collaboration on reports, research, and support.
+
+    Share custom assistants across your team for consistent outputs.
+
+    <Expandable title="Example Use Case">
+      Deploy a research assistant that summarizes market trends from multiple sources.
+    </Expandable>
+  </Tab>
+  <Tab title="Organizations" icon="building">
+    Enterprise-grade automations for compliance, HR, and operations.
+
+    Scale AI across departments with governance and analytics.
+
+    <Expandable title="Example Use Case">
+      Automate compliance checks on documents using fine-tuned models.
+    </Expandable>
+  </Tab>
+</Tabs>
+
+```mermaid
+graph LR
+    A[You Select Model] --> B[Customize Assistant]
+    B --> C[Deploy Automation]
+    C --> D[Monitor Results]
+    D --> A
+```
+
+Ready to transform your workflow? Explore the [marketplace](/docs/marketplace) or start with a [quick integration](/docs/quickstart).

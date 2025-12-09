@@ -1,0 +1,179 @@
+---
+title: Authentication and Access Control
+description: Learn how to securely authenticate with Unitalk, manage API keys, and handle tokens for integrating AI models and protecting your automations.
+---
+
+## Overview
+
+Unitalk provides robust authentication options to secure your AI integrations and automations. Use API keys for simple server-to-server access or OAuth 2.0 for user-authorized flows. Follow these methods to generate credentials, make authenticated requests, and apply security best practices.
+
+<Callout kind="alert">
+  Never expose your API keys or tokens in client-side code or public repositories. Use environment variables and secure vaults.
+</Callout>
+
+```mermaid
+sequenceDiagram
+    Client->>Unitalk API: Generate Key (POST /api/v1/keys)
+    Unitalk API->>Client: API Key
+    Client->>Unitalk API: Auth Request (Authorization: Bearer {key})
+    Unitalk API->>Client: AI Response
+```
+
+## Generate an API Key
+
+Create API keys directly from your Unitalk dashboard or via API for programmatic access.
+
+<Steps>
+  <Step title="Log In" icon="log-in">
+    Access your Unitalk account at `https://app.unitalk.ai` and navigate to **Settings > API Keys**.
+  </Step>
+  <Step title="Create Key" icon="key">
+    Click **Generate New Key**. Name it descriptively, like `Production AI Assistant`.
+  </Step>
+  <Step title="Copy and Secure" icon="copy">
+    Copy the generated key immediately. Store it securely—you cannot view it again.
+  </Step>
+</Steps>
+
+<ParamField header="X-API-Key" param-type="string" required="true">
+  Your secret API key for authentication.
+</ParamField>
+
+## Use API Keys in Requests
+
+Authenticate requests by including the key in the `Authorization` header as `Bearer {your_key}`.
+
+<CodeGroup tabs="JavaScript,Python,cURL">
+  ```javascript
+  const response = await fetch('https://api.unitalk.ai/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer utk_1234567890abcdef',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      model: 'gpt-4o',
+      messages: [{ role: 'user', content: 'Hello, Unitalk!' }]
+    })
+  });
+  const data = await response.json();
+  console.log(data);
+  ```
+  ```python
+  import requests
+
+  headers = {
+      'Authorization': 'Bearer utk_1234567890abcdef',
+      'Content-Type': 'application/json'
+  }
+  data = {
+      'model': 'gpt-4o',
+      'messages': [{'role': 'user', 'content': 'Hello, Unitalk!'}]
+  }
+  response = requests.post(
+      'https://api.unitalk.ai/v1/chat/completions',
+      headers=headers,
+      json=data
+  )
+  print(response.json())
+  ```
+  ```bash
+  curl -X POST https://api.unitalk.ai/v1/chat/completions \
+    -H "Authorization: Bearer utk_1234567890abcdef" \
+    -H "Content-Type: application/json" \
+    -d '{
+      "model": "gpt-4o",
+      "messages": [{"role": "user", "content": "Hello, Unitalk!"}]
+    }'
+  ```
+</CodeGroup>
+
+<Request tabs="JavaScript,cURL">
+  ```javascript
+  // Example request with API key
+  fetch('/v1/models', {
+    headers: { 'Authorization': 'Bearer utk_1234567890abcdef' }
+  });
+  ```
+  ```bash
+  curl -H "Authorization: Bearer utk_1234567890abcdef" https://api.unitalk.ai/v1/models
+  ```
+</Request>
+
+<Response tabs="200">
+  ```json
+  {
+    "object": "list",
+    "data": [
+      {
+        "id": "unitalk-gpt-4o",
+        "object": "model",
+        "created": 1725120000,
+        "owned_by": "unitalk"
+      }
+    ]
+  }
+  ```
+</Response>
+
+## OAuth 2.0 Integration
+
+For applications needing user consent, implement OAuth 2.0. Unitalk supports Authorization Code flow with PKCE.
+
+<Tabs>
+  <Tab title="Client Setup" icon="settings">
+    Register your app in the Unitalk dashboard to get `client_id` and `client_secret`.
+
+    <ParamField query="client_id" param-type="string" required="true">
+      Your app's unique client ID.
+    </ParamField>
+
+    <ParamField query="redirect_uri" param-type="string" required="true">
+      Callback URL registered with Unitalk.
+    </ParamField>
+  </Tab>
+  <Tab title="Authorization URL" icon="external-link">
+    Redirect users to:
+
+    ```
+    https://auth.unitalk.ai/oauth/authorize?
+    client_id={client_id}&
+    response_type=code&
+    redirect_uri={redirect_uri}&
+    scope=chat:read chat:write
+    ```
+  </Tab>
+</Tabs>
+
+## Security Best Practices
+
+Protect your integrations with these guidelines.
+
+<Columns cols={2}>
+  <Card title="Rotate Keys Regularly" icon="refresh-cw" horizontal>
+    Generate new keys monthly and revoke old ones to minimize exposure risks.
+  </Card>
+  <Card title="Use Least Privilege" icon="shield">
+    Create scoped keys for specific models or assistants only.
+  </Card>
+  <Card title="Monitor Usage" icon="activity">
+    Track API calls via dashboard to detect anomalies early.
+  </Card>
+  <Card title="HTTPS Only" icon="lock">
+    Enforce TLS 1.3+ for all requests—Unitalk rejects insecure connections.
+  </Card>
+</Columns>
+
+<Expandable title="Advanced: JWT Token Handling" default-open="false">
+  For long-lived sessions, validate JWTs with Unitalk's public key:
+
+  ```javascript
+  import jwt from 'jsonwebtoken';
+
+  const decoded = jwt.verify(token, publicKey, { algorithms: ['RS256'] });
+  ```
+</Expandable>
+
+<Callout kind="tip">
+  Enable two-factor authentication (2FA) on your Unitalk account for added protection.
+</Callout>

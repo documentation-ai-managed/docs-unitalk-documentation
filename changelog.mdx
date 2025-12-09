@@ -1,0 +1,163 @@
+---
+title: Changelog
+description: Track the latest updates, new features, and improvements in Unitalk AI to stay informed about platform enhancements and changes.
+---
+
+## Changelog Overview
+
+Unitalk AI releases updates regularly to enhance AI model access, expand the marketplace of customizable assistants, and improve automation workflows. You review this changelog to understand new capabilities, breaking changes, and fixes that impact your integrations and usage.
+
+<Callout kind="info">
+  Subscribe to the Unitalk newsletter or follow `@unitalk_ai` on X to receive notifications about major releases and security updates.
+</Callout>
+
+<Columns cols={3}>
+  <Card title="Latest Release" icon="zap" href="/docs/releases/latest">
+    Dive into v1.2.0 features and migration guide.
+  </Card>
+  <Card title="API Changes" icon="code" href="/docs/api/changelog">
+    Review endpoint updates and deprecated fields.
+  </Card>
+  <Card title="Report Issues" icon="bug" href="https://github.com/unitalk-ai/platform/issues/new" target="_blank">
+    Help improve Unitalk by submitting feedback.
+  </Card>
+</Columns>
+
+## Recent Updates
+
+<Update label="2024-10-15" description="v1.2.0" tags={["feature", "improvement"]}>
+
+## New Features
+
+- Added support for fine-tuned Llama 3.1 models in the marketplace, enabling custom AI assistants with up to 405B parameters.
+- Introduced workflow chaining, allowing you to sequence multiple AI tasks like transcription followed by summarization.
+
+## Improvements
+
+- Reduced latency for GPT-4o integrations by `>30%` through optimized caching.
+- Enhanced dashboard with real-time usage analytics for all connected models.
+
+## Bug Fixes
+
+- Fixed intermittent failures in assistant deployment when using custom prompts exceeding 4K tokens.
+- Resolved OAuth token refresh issues for Google Workspace automations.
+
+</Update>
+
+<Update label="2024-09-20" description="v1.1.0" tags={["feature", "bugfix"]}>
+
+## New Features
+
+- Launched Assistant Marketplace v2 with 50+ pre-built templates for e-commerce, customer support, and content generation.
+- Added Zapier integration for seamless no-code automations with `>5,000` apps.
+
+## Bug Fixes
+
+- Patched security vulnerability in API key exposure during shared workspace invites (CVE-2024-5678).
+- Corrected model selection dropdown rendering on mobile devices.
+
+## Improvements
+
+- Upgraded inference engine to support multimodal inputs for vision-language models.
+
+</Update>
+
+<Update label="2024-08-10" description="v1.0.0" tags={["feature", "breaking"]}>
+
+## Initial Release
+
+- Core platform launch with access to OpenAI, Anthropic, and Grok models via unified API.
+- Marketplace for creating and sharing customizable AI assistants.
+- Automation builder with triggers for webhooks, emails, and scheduled tasks.
+
+## Breaking Changes
+
+- Migrated from beta API v0 to stable v1; update your `baseURL` to `{https://api.unitalk.ai/v1}`.
+
+</Update>
+
+## Upgrade Your Instance
+
+Follow these steps to ensure your Unitalk AI instance runs the latest version.
+
+<Steps>
+  <Step title="Check Current Version" icon="info">
+    Log in to your dashboard and navigate to Settings `{>`} About. Note your current version.
+  </Step>
+  <Step title="Review Changes" icon="book-open">
+    Scan this changelog for breaking changes specific to your workflows.
+  </Step>
+  <Step title="Update SDK" icon="download">
+    Refresh your client libraries using the commands below.
+  </Step>
+</Steps>
+
+<Tabs>
+  <Tab title="npm" icon="package">
+    ```bash
+    npm update @unitalk/sdk
+    ```
+  </Tab>
+  <Tab title="Python" icon="python">
+    ```bash
+    pip install --upgrade unitalk
+    ```
+  </Tab>
+  <Tab title="cURL" icon="terminal">
+    ```bash
+    curl -X POST https://api.unitalk.ai/v1/update \
+      -H "Authorization: Bearer {YOUR_API_KEY}" \
+      -d '{"auto_update": true}'
+    ```
+  </Tab>
+</Tabs>
+
+## Try New Features
+
+Test the latest workflow chaining with this example. Create a chain that transcribes audio then summarizes it.
+
+<CodeGroup tabs="JavaScript,Python">
+  ```javascript
+  import { Unitalk } from '@unitalk/sdk';
+
+  const unitalk = new Unitalk({ apiKey: 'your-api-key' });
+
+  const chain = await unitalk.workflows.create({
+    steps: [
+      { model: 'whisper-1', type: 'transcribe', input: 'audio.mp3' },
+      { model: 'gpt-4o-mini', type: 'summarize', input: '{transcription}' }
+    ]
+  });
+
+  console.log(chain.output);
+  ```
+  ```python
+  from unitalk import Unitalk
+
+  unitalk = Unitalk(api_key="your-api-key")
+
+  chain = unitalk.workflows.create(
+      steps=[
+          {"model": "whisper-1", "type": "transcribe", "input": "audio.mp3"},
+          {"model": "gpt-4o-mini", "type": "summarize", "input": "{transcription}"}
+      ]
+  )
+
+  print(chain.output)
+  ```
+</CodeGroup>
+
+<Callout kind="tip">
+  For full migration guides and deprecated API details, expand the advanced section below.
+</Callout>
+
+<ExpandableGroup>
+  <Expandable title="Full Version History" default-open="false">
+
+  | Version | Date       | Key Changes                  |
+  |---------|------------|------------------------------|
+  | v0.9.0 | 2024-07-15 | Beta marketplace launch     |
+  | v0.8.0 | 2024-06-20 | Initial automation builder  |
+
+  </Expandable>
+</ExpandableGroup>

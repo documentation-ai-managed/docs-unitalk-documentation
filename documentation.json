@@ -1,0 +1,76 @@
+{
+  "name": "Unitalk Documentation",
+  "initialRoute": "introduction",
+  "colors": {
+    "light": {
+      "brand": "#14a1d8"
+    },
+    "dark": {
+      "brand": "#4fb9e2"
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "icon": "book",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "icon": "rocket",
+            "pages": [
+              {
+                "title": "Introduction",
+                "path": "introduction",
+                "icon": "home"
+              },
+              {
+                "title": "Quickstart",
+                "path": "quickstart",
+                "icon": "zap"
+              }
+            ]
+          },
+          {
+            "group": "Guides",
+            "icon": "compass",
+            "pages": [
+              {
+                "title": "Authentication",
+                "path": "authentication",
+                "icon": "lock"
+              },
+              {
+                "title": "Configuration",
+                "path": "configuration",
+                "icon": "settings"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "icon": "code",
+        "groups": [
+          {
+            "group": "Endpoints",
+            "icon": "terminal",
+            "openapi": "openapi.yaml"
+          }
+        ]
+      },
+      {
+        "tab": "Changelog",
+        "icon": "clock",
+        "pages": [
+          {
+            "title": "Release History",
+            "path": "changelog",
+            "icon": "history"
+          }
+        ]
+      }
+    ]
+  }
+}
